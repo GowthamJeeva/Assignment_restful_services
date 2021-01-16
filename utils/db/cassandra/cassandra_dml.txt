@@ -1,0 +1,29 @@
+CREATE KEYSPACE IF NOT EXISTS loginX WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 } AND DURABLE_WRITES = false;
+
+create table if not exists loginX.users(id uuid, firstname varchar, lastname varchar, email varchar, password varchar, mobile_number varchar, primary key (email));
+
+create table if not exists loginX.products(id uuid, sku varchar, name varchar, category varchar, image_url varchar, price double, unit varchar, rating int, stock_count int, primary key(sku,name,id));
+CREATE CUSTOM INDEX product_name ON loginX.products (name) USING 'org.apache.cassandra.index.sasi.SASIIndex' WITH OPTIONS = {'mode': 'CONTAINS','analyzer_class': 'org.apache.cassandra.index.sasi.analyzer.StandardAnalyzer', 'case_sensitive': 'false'};
+
+CREATE CUSTOM INDEX product_category ON loginX.products (category) USING 'org.apache.cassandra.index.sasi.SASIIndex' WITH OPTIONS = {'mode': 'CONTAINS','analyzer_class': 'org.apache.cassandra.index.sasi.analyzer.StandardAnalyzer', 'case_sensitive': 'false'};
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1234','Medicine 1', 'fever', 'https://medlineplus.gov/images/Medicines.jpg', 10.50, 'mg', 4, 10);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1235','Medicine 2', 'cough', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmY6hAjYZeBQQYBsn_ykOa3LIIFFwpFbbhQQ&usqp=CAU', 15.50, 'mg', 3, 110);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1236','Medicine 3', 'cold', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKGj9DwrXsr4EmN0fYaUpFT3gEstxAcfO4Dg&usqp=CAU', 20.50, 'g', 5, 90);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1237','Medicine 4', 'Stomach Pain', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRspktDaktOnsmuujx-kSaBl-BWd5r4oSxe2Q&usqp=CAU', 30.50, 'g', 2, 40);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1238','Medicine 5', 'fever', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcwtOkjaupWFDRJkiqGlr65CoKwiUAGsopjA&usqp=CAU', 12.50, 'mg', 3, 50);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1239','Medicine 6', 'fever', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQCWmkFGC_sOtUyDD6d-8nUEFg8SVJ9SZO2w&usqp=CAU', 13.50, 'mg', 4, 60);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1231','Medicine 7', 'cough', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVj76PQfV1yZm_wR4pU1c_xD-9aXIIyWPXxA&usqp=CAU', 14.50, 'mg', 4,80);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1232','Medicine 8', 'cough', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_iibGlVZWmrvunTzjS1L87dqy1mLgJCvagA&usqp=CAU', 15.50, 'mg', 4,40);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1233','Medicine 9', 'Stomach Pain', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgV6IgU9b4hvsUsPEZW27I29BodO7ue9UzRg&usqp=CAU', 16.50, 'mg', 5,100);
+
+insert into loginX.products(id,sku, name, category, image_url,price,unit,rating,stock_count) values(uuid(),'1230','Medicine 10', 'cold', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIy_z0QuqBSG4l3Tft5pu5SS4g_DotbVSvjg&usqp=CAU', 17.50, 'g', 5,200);
+
+create table if not exists loginX.orders(id uuid, product_uuid uuid, user_name varchar, phone_number varchar, delivery_address text, status varchar,created_at timestamp, primary key(id));

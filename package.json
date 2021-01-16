@@ -1,0 +1,28 @@
+{
+  "name": "loginx-be",
+  "version": "1.0.0",
+  "description": "Login-X application",
+  "main": "./bin/server.js",
+  "bin": {
+    "loginx-be": "server.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./bin/server.js",
+    "pm2:start": "pm2 start ecosystem.config.json"
+  },
+  "author": "Gowtham",
+  "license": "ISC",
+  "dependencies": {
+    "btoa": "^1.2.1",
+    "cors": "^2.8.5",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "jsonwebtoken-refresh": "^5.7.0",
+    "mongodb": "^3.2.2",
+    "nodemailer": "^5.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
